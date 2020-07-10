@@ -198,6 +198,16 @@ def main():
 
         sScriptAppWorkDirspec = os.path.realpath(sScriptAppWorkDir);
 
+        if not os.path.exists(sScriptAppWorkDirspec):
+
+            if bVerbose == True:
+
+                print("");
+                print("%s Creating working directory [%s]..." % (sScriptDisp, sScriptAppWorkDirspec));
+                print("");
+
+            os.makedirs(sScriptAppWorkDirspec);
+
         if not os.path.isdir(sScriptAppWorkDirspec):
 
             print("");
