@@ -1178,7 +1178,7 @@ class CxRestAPIProjectCreationBase:
             CxRestAPIStatistics1.cRestAPICallsMade += 1;
 
             cxRequestURL = "%s/cxrestapi/projects" % (self.cxServerEndpoint.getCxServerURL());
-            cxReqPayload = "{'name':\"%s\", 'owningTeam':\"%s\", 'isPublic':%s}" % (cxProjectCreation.getCxProjectName(), cxProjectCreation.getCxProjectTeamId(), ("true" if (cxProjectCreation.getCxProjectIsPublic() == True) else "false"));
+            cxReqPayload = "{'name':\"%s\", 'owningTeam':\"%s\", 'isPublic':%s}" % (cxProjectCreation.getCxProjectName(), cxProjectCreation.getCxProjectTeamId(), ("true" if (cxProjectCreation.getCxProjectIsPublic().lower() == "true") else "false"));
             cxReqHeaders = {
                 'Content-Type':  "application/json;v=2.0",
                 'Authorization': ("%s %s" % (self.cxServerEndpoint.getCxTokenType(), self.cxServerEndpoint.getCxAccessToken())),
