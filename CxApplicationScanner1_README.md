@@ -12,37 +12,42 @@ This project is still in BETA and has not been officially released.
 
 --- How to setup to run the Tool ---
 
-1) Make sure that a version of Python 3 (v3.4+) is installed. You can download Python (for your OS) from: https://www.python.org/downloads/
-
-2) Make sure you have the latest version of 'pip'. From a 'elevated' (Admin) command prompt, 
-   run: python -m pip install pip
-
-3) Make sure you have the latest version of 'requests'. From a 'elevated' (Admin) command prompt, 
-   run: pip install requests
-
-4) Make sure you have the latest version of 'certifi'. From a 'elevated' (Admin) command prompt, 
-   run: pip install certifi
-
-6) Make sure you have the latest version of 'zope.interface'. From a 'elevated' (Admin) command prompt, 
-   run: pip install zope.interface
-
-5) Make sure you have the latest version of 'requests_toolbelt'. From a 'elevated' (Admin) command prompt, 
-   run: pip install requests_toolbelt
-
-7) On Windows:
-
-       a) The following 'extra' pip install commands may need to be issued:
-           pip install python-interface
-           pip install tqdm
-           pip install opencv-python
-
-8) Download the 'CxApplicationScanner1.zip' (zip) file and extract it to a subdirectory (on the Checkmarx POC/Manager machine).
-
-9) In a 'normal' command prompt, CD into the tool directory (containing the 'CxApplicationScanner1.py' file). 
-   Run: python CxApplicationScanner1.py --help 
+1. Make sure that a version of Python 3 (v3.4+) is installed. You can download Python (for your OS) from: https://www.python.org/downloads/
+2. Make sure you have the latest version of 'pip'. From a 'elevated' (Admin) command prompt, run:
+   ```bash
+   python -m pip install pip
+   ```
+3. Make sure you have the latest version of 'requests'. From a 'elevated' (Admin) command prompt, run:
+   ```bash
+   pip install requests
+   ```
+4. Make sure you have the latest version of 'certifi'. From a 'elevated' (Admin) command prompt, run:
+   ```bash
+   pip install certifi
+   ```
+5. Make sure you have the latest version of 'zope.interface'. From a 'elevated' (Admin) command prompt, run:
+   ```bash
+   pip install zope.interface
+   ```
+6. Make sure you have the latest version of 'requests_toolbelt'. From a 'elevated' (Admin) command prompt, run:
+   ```bash
+   pip install requests_toolbelt
+   ```
+7. On Windows:
+   * The following 'extra' pip install commands may need to be issued:
+      ```bash
+      pip install python-interface
+      pip install tqdm
+      pip install opencv-python
+      ```
+8. Download the 'CxApplicationScanner1.zip' (zip) file and extract it to a subdirectory (on the Checkmarx POC/Manager machine).
+9. In a 'normal' command prompt, CD into the tool directory (containing the 'CxApplicationScanner1.py' file) and run:
+   ```bash
+   python CxApplicationScanner1.py --help
+   ```
 
    This should display 'help' like the following:
-
+      ```bash
         CxApplicationScanner1.py (v1.0111): The Checkmarx Application 'scanner' via Rest API #1
         is starting execution from Server [DRCMBP3-4.local] on [2019/11/11 at 10:09:08] under Python [v3.7.3]...
 
@@ -71,36 +76,28 @@ This project is still in BETA and has not been officially released.
                                 Application 'work' directory [generated to - MUST be
                                 Empty]
           --git-user=Git-UserId
-                                Git (authentication) UserId
+                                Git (authentication) UserId (not required if using 'BranchDirectory')
           --git-pswd=Git-Password
-                                Git (authentication) Password
+                                Git (authentication) Password (not required if using 'BranchDirectory')
+      ```
 
 ## Extra Setup instructions
 
 --- Commands used by the Tool ---
 
-1) The tool requires the use of a 'zip' command:
-
-    a) For Windows, this is 7-zip: 
-
-       Install the '7z' command and make sure that it is in the PATH used by the command prompt.
-
-    b) For *Nix (Linux/Mac), this is the builtin 'zip' command.
-
-       Make sure that 'zip' can be issued in a command prompt and that the system finds the executable.
+1. The tool requires the use of a 'zip' command:
+   * For Windows, this is 7-zip. Install the '7z' command and make sure that it is in the PATH used by the command prompt.
+   * For *Nix (Linux/Mac), this is the builtin 'zip' command. Make sure that `zip` can be issued in a command prompt and that the system finds the executable.
 
 ## Operation
 
 --- How to run the Tool ---
 
-1) In order to have the 'plist' control file (required by CxApplicationScanner1.py) to provide it the 
-   'Application' information needed to create and scan a zip file, the tool 'CxTFSGetAllProjects1.py'
-   MUST have been run first to produce these control files (see 'CxTFSGetAllProjects1_README.md').
+1. In order to have the 'plist' control file (required by CxApplicationScanner1.py) to provide it the 'Application' information needed to create and scan a zip file, the tool 'CxTFSGetAllProjects1.py' MUST have been run first to produce these control files (see 'CxTFSGetAllProjects1_README.md').
 
-2) In a 'normal' command prompt, CD into the tool directory (containing the 'CxApplicationScanner1.py' file).
-   You MUST create an (empty) 'working' directory for the tool to generate the .zip file to be scanned.
-
-   Run: 
+2. In a 'normal' command prompt, CD into the tool directory (containing the 'CxApplicationScanner1.py' file). You MUST create an (empty) 'working' directory for the tool to generate the .zip file to be scanned.
+   Run:
+      ```bash
        python CxApplicationScanner1.py
        -v 
        --url protocol://<Checkmarx-hostname-or-IP>:<port#>
@@ -112,23 +109,25 @@ This project is still in BETA and has not been officially released.
        -w ./AppScanner_WorkDir 
        --git-user <name (Git)>
        --git-pswd <password (Git)>
-       > CxApplicationScanner1.ot1_10042019.log 2>&1 
+       > CxApplicationScanner1.ot1_10042019.log 2>&1
+      ```
 
-   Where: 
-       a) The command can all be on one line. It's broken out to separate lines here to make it easier to read.
-       c) The --url needs to be updated to point to your Checkmarx host (by DNS name or IP). Like 'https://192.168.2.190:8080'.
-       d) The --user is your Checkmarx User name (aka, ID).
-       e) The --pswd is your Checkmarx (User) password.
-       f) The -o is the output 'report' file to be generated.
-       g) The -d is an existing directory where the generated Project (App) 'plist' files were written out to.
-       h) The -p is the filename of the generated Project (App) 'plist' to be scanned.
-       i) The -w is an existing (empty) directory where the generated Project (App) zip file will be created.
-       j) The --git-user is your Git User name (aka, ID).
-       k) The --git-pswd is your Git (User) password.
+   Where:
+      1. The command can all be on one line. It's broken out to separate lines here to make it easier to read.
+      2. The --url needs to be updated to point to your Checkmarx host (by DNS name or IP). Like 'https://192.168.2.190:8080'.
+      3. The --user is your Checkmarx User name (aka, ID).
+      4. The --pswd is your Checkmarx (User) password.
+      5. The -o is the output 'report' file to be generated.
+      6. The -d is an existing directory where the generated Project (App) 'plist' files were written out to.
+      7. The -p is the filename of the generated Project (App) 'plist' to be scanned.
+      8. The -w is an existing (empty) directory where the generated Project (App) zip file will be created.
+      9. The --git-user is your Git User name (aka, ID).
+      10. The --git-pswd is your Git (User) password.
+
+   **Note: git credentials are not required if your plist file uses the `BranchDirectory` option in `RepoBranches` config. See [Sample_ProjectCreator_AppScanner-local-repo.plist](Sample_ProjectCreator_AppScanner-local-repo.plist) for an example.**
 
    Then:
-       a) Zip up and send back the files 'CxApplicationScanner1_report.txt' and 'CxApplicationScanner1.ot1_10042019.log' and
-          add all of the generated contents in the 'AppScanner_WorkDir' directory.
+      * Zip up and send back the files 'CxApplicationScanner1_report.txt' and 'CxApplicationScanner1.ot1_10042019.log' and add all of the generated contents in the 'AppScanner_WorkDir' directory.
 
 ## Future Enhancements
 

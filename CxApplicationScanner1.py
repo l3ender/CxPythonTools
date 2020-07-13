@@ -58,8 +58,8 @@ def main():
         optParser.add_option("--pswd", dest="cx_auth_pswd", default="", help="Checkmarx Authentication Password", metavar="Checkmarx-Password");
         optParser.add_option("-o", "--output-scanner-file", dest="output_scanner_file", default="", help="(Output) Scanner 'report' file [generated]");
         optParser.add_option("-w", "--app-work-dir", dest="app_work_dir", default="", help="Application 'work' directory [generated to - MUST be Empty]");
-        optParser.add_option("--git-user", dest="git_user", default="", help="Git (authentication) UserId", metavar="Git-UserId");
-        optParser.add_option("--git-pswd", dest="git_pswd", default="", help="Git (authentication) Password", metavar="Git-Password");
+        optParser.add_option("--git-user", dest="git_user", default="", help="Git (authentication) UserId (not required if using 'BranchDirectory')", metavar="Git-UserId");
+        optParser.add_option("--git-pswd", dest="git_pswd", default="", help="Git (authentication) Password (not required if using 'BranchDirectory')", metavar="Git-Password");
      
         (options, args) = optParser.parse_args();
      
