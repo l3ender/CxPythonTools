@@ -8,6 +8,7 @@ import sys;
 import collections;
 import zope.interface;
 import subprocess;
+import shutil;
 
 import CxProjectCreation1;
 
@@ -221,6 +222,22 @@ class CxApplicationScannerGITZipper(object):
 
             self.sCxApplicationWorkDir = None;
 
+    def clearApplicationWorkDir(self):
+
+        print("%s Clearing application work dir [%s]" % (self.sClassDisp, self.sCxApplicationWorkDir));
+
+        for filename in os.listdir(self.sCxApplicationWorkDir):
+            file_path = os.path.join(self.sCxApplicationWorkDir, filename);
+            if self.bTraceFlag == True:
+                print("   Deleting %s" % (file_path));
+            try:
+                if os.path.isfile(file_path) or os.path.islink(file_path):
+                    os.unlink(file_path)
+                elif os.path.isdir(file_path):
+                    shutil.rmtree(file_path)
+            except Exception as e:
+                print('Failed to delete %s. Reason: %s' % (file_path, e))
+
     def getCxApplicationZip(self):
 
         return self.sCxApplicationZip;
@@ -374,6 +391,8 @@ class CxApplicationScannerGITZipper(object):
             print("");
 
             return False;
+
+        self.clearApplicationWorkDir();
 
         bProcessingError = False;
 
