@@ -496,6 +496,7 @@ class CxApplicationScannerGITZipper(object):
                     print("%s For a CxProjectCreation named [%s] type [%s] created an application repo 'target' directory of [%s]..." % (self.sClassDisp, sCxProjectName, sCxProjectZipTargetType, sAppRepoTargetDirspec));
 
                 sAppRepoBranch = None;
+                sAppRepoDirectory = None;
 
                 listAppRepoBranches = dictAppRepoItem["RepoBranches"];
 
@@ -536,17 +537,28 @@ class CxApplicationScannerGITZipper(object):
 
                         sAppRepoBranch = asAppRepoBranchTokens[2];
 
+                        if "BranchDirectory" in dictAppRepoBranch:
+                            sAppRepoDirectory = dictAppRepoBranch["BranchDirectory"];
+
                         break;
 
-                bCloneAppRepoBranchOk = self.__cloneCxAppRepoBranchToDirectory(appreporemoteurl=sAppRepoRemoteURL, apprepobranch=sAppRepoBranch, apprepotargetdir=sAppRepoTargetDirspec);
+                if sAppRepoDirectory != None and len(sAppRepoDirectory) > 0:
+                    if os.path.isdir(sAppRepoDirectory):
+                        print("%s Will use directory for source code instead of cloning: [%s]" % (self.sClassDisp, sAppRepoDirectory));
+                        self.__copyAppRepoDirectory(sourcedir=sAppRepoDirectory, destdir=sAppRepoTargetDirspec);
+                    else:
+                        print("%s Provided directory [%s] is not valid!" % (self.sClassDisp, sAppRepoDirectory));
+                        return False;
+                else:
 
-                if bCloneAppRepoBranchOk == False:
+                    bCloneAppRepoBranchOk = self.__cloneCxAppRepoBranchToDirectory(appreporemoteurl=sAppRepoRemoteURL, apprepobranch=sAppRepoBranch, apprepotargetdir=sAppRepoTargetDirspec);
 
-                    print("");
-                    print("%s '__cloneCxAppRepoBranchToDirectory()' API call failed - Error!" % (self.sClassDisp));
-                    print("");
+                    if bCloneAppRepoBranchOk == False:
+                        print("");
+                        print("%s '__cloneCxAppRepoBranchToDirectory()' API call failed - Error!" % (self.sClassDisp));
+                        print("");
 
-                    continue;
+                        continue;
 
             # Zip up the App Repo(s)...
 
@@ -592,6 +604,12 @@ class CxApplicationScannerGITZipper(object):
             return False;
 
         return True;
+
+    def __copyAppRepoDirectory(self, sourcedir=None, destdir=None):
+        if self.bTraceFlag == True:
+            print("%s Copying [%s] to [%s]" % (self.sClassDisp, sourcedir, destdir));
+        from distutils.dir_util import copy_tree;
+        copy_tree(sourcedir, destdir);
 
     def __cloneCxAppRepoBranchToDirectory(self, appreporemoteurl=None, apprepobranch=None, apprepotargetdir=None):
 
