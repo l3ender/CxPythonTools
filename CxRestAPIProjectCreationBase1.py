@@ -2002,7 +2002,7 @@ class CxRestAPIProjectCreationBase:
             CxRestAPIStatistics1.cRestAPICallsMade += 1;
 
             cxRequestURL = "%s/cxrestapi/sast/scans" % (self.cxServerEndpoint.getCxServerURL());
-            cxReqPayload = "{'projectId':\"%s\", 'isIncremental':\"false\", 'isPublic':\"%s\", 'forceScan':\"true\"}" % (cxProjectCreation.getCxProjectId(), ("true" if (cxProjectCreation.getCxProjectScanIsPublic() == True) else "false"));
+            cxReqPayload = "{'projectId':\"%s\", 'isIncremental':\"false\", 'isPublic':\"%s\", 'forceScan':\"true\"}" % (cxProjectCreation.getCxProjectId(), ("true" if (cxProjectCreation.getCxProjectScanIsPublic().lower() == "true") else "false"));
             cxReqHeaders = {
                 'Content-Type':  "application/json;v=1.0",
                 'Authorization': ("%s %s" % (self.cxServerEndpoint.getCxTokenType(), self.cxServerEndpoint.getCxAccessToken())),
