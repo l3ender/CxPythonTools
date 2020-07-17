@@ -2099,6 +2099,9 @@ class CxRestAPIProjectCreationBase:
                 #   cxProjectCreation.setCxProjectExtraField2(cxprojectextrafield2=dictCxScanData);
                 #   cxProjectCreation.setCxProjectId(cxprojectid=dictCxReqResponseJsonItem);
 
+            if "id" in dictCxReqResponseJson:
+                print("\n%s Scan [%s] created for project [%s]\n" % (self.sClassDisp, dictCxReqResponseJson["id"], cxProjectCreation.getCxProjectId()));
+
         except Exception as inst:
 
             print("%s 'scanCxRestAPIProject()' - exception occured..." % (self.sClassDisp));
